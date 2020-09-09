@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="codequiz.css" rel="stylesheet">
+
+    <title>Code Quiz</title>
+</head>
+<!-- creating java quiz with .js file -->
+
+<!-- when the css is linked it leads the user a start page with a start BTN. 
+BTN can not be clicked and timer starts as soon as  -->
+<body>
+    <!-- start page with a start BTN, timer and quiz should not start until the start BTN is clicked -->
+    <header class="container">
+        <section id="start"> Start Coding Quiz! </section>
+        <section class="controls">
+            </br>
+            <button id="start-btn" class="start-btn btn">Start</button>
+        </section>
+    </header>
+
+    <section id="question-container" class="container"> </section>
+
+    <section id="question">
+        <section id="choices"></section>
+    </section>
+
+    <!-- supposed to be the timer -->
+    <section id="timer">200 </section>
+
+    <!-- not 100% sure what this is for, maybe to add to the user's scores? -->
+    <section id="counter"></section>
+    <!-- i was pretty sure this was for the user's scores -->
+    <section id="scoreContainer" style="display : none;"></section>
+
+    <!-- user can see their scores and put initials and submit -->
+    <section id="endGame" class="hide">
+        <h1>Great Game!</h1>
+        <h2 id="userScores">Final Score:</h2>
+        <p>Initials: <input type="text" id="initials" />
+            <button id="listOfScores">Submit</button>
+        </p>
+    </section>
+
+
+
+
+
+
+    <script src="codequiz.js"></script>
+
+</body>
+
+</html>
