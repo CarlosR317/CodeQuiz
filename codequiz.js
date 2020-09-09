@@ -7,21 +7,12 @@
 
 
 // pretty sure this will be used to get the start button to actually get the game going. this was provided by youtube.
-
+var quesIndex = 0;
 
 
 //How do I make it so that the timer starts when the start btn is clicked 
 var start = document.getElementById("start");
-// startButton.addEventListener('click', startGame);
-// function startGame() {
-//     console.log('Started')
-//     startButton.classList.add('hide')
-//     questionContainerElement.classList.remove('hide')
-//     setNextQuestion()
-// function setNextQuestion() {
 
-// // }
-// function selectAnswer() {
 
 var startButton = document.getElementById("start-btn");
 
@@ -29,65 +20,39 @@ startButton.addEventListener('click', startGame);
 function startGame() {
     t = 200
     startButton.classList.add('hide')
-    shuffleQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
     questionElement.classList.remove('hide')
     setNextQuestion()
 }
 
 function setNextQuestion() {
-    resetState()
-    showQuestion(shuffledQuestions[currentQuestionIndex])
-}
+    var currentques = questions[quesIndex]
+    var question = document.getElementById("question");
+    question.textContent = currentques.question;
 
-function showQuestion(question) {
-    questionElement.innerText = question.question
-    question.answers.forEach(answer => {
-        var startButton = document.createElement('start-btn')
-        startButton.innerText = answer.innerText
-        startButton.classList.add('btn')
-        if (answer.correct) {
-            startButton.dataset.correct = answer.correct
-        }
-        startButton.addEventListener('click', selectAnswer)
-        answerButtonsElement.appendChild(button)
-    })
-}
+    for (var i = 0; i < choices.length; i++) {
+        var choice = document.createElement("button");
+    userChoices.append(choice)
+    choice.onclick = selectAnswer
 
-function resetState() {
-    nextButton.classList.add('hide')
-    while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild
-            (answerButtonsElement.firstChild)
     }
 }
+function showQuestions() {
 
-function selectAnswer(e) {
-     var selectButton = e.target
-     var correct = selectButton.dataset.correct
-     setStatusClass(document.body, correct)
-     Array.from(answerButtonsElement.children).forEach(button => {
-         setStatusClass(button, button.dataset.correct)
-     })
 }
+// timer works when this is commented out 
+// function selectAnswer(e) {
+//     var selectButton = e.target
+//     if (selectButton !== questions[quesIndex].correct) {
+//         t = - 5;
+//     }
+// }
+// if (selectButton == questions[quesIndex].correct) {
+//     question
 
-function setStatusClass(element, correct) {
-    clearStatusClass(element)
-    if (correct) {
-    element.classList.add('correct')
-    } else {
-        element.classList.add('wrong')
-    }
-}
+// }
 
-function clearStatusClass(element) {
-    element.classList.remove('correct')
-    element.classList.remove('wrong')
-}
-
-// this timer seems to work well, starts at 200 and counts down when start btn is pushed provided by youtube
-
-// still have to figure out how to take time away when a question is wrong
+// still have to figure out how to make the above code work, it is supposed to take 5 seconds off the clock when an answer is wrong but when the code is in place it does not let the timer work.
 
 
 function timer001() {
@@ -101,23 +66,7 @@ function timer001() {
 }
 update = setInterval("timer001()", 1000);
 
-// not sure if this code will be needed since the timer is already pulled up
-// var timer = document.getElementById("timer");
 
-// this timer starts at 1 and counts down right away, can't seem to change the time. provided by youtube.
-// var total_seconds = 100;
-// var c_seconds = parseInt(total_seconds/100);
-// function CheckTime() {document.getElementById("timer").innerHTML
-// ='Timer: ' + c_seconds + ' seconds';
-// if(total_seconds <=0){
-//     setTimeout('document.quiz.submit()', 1);
-//     } else{
-//         total_seconds = total_seconds -1;
-//         c_seconds = parseInt(total_seconds/100);
-//         setTimeout("CheckTime()", 1000); 
-//     }}
-//     setTimeout("CheckTime()", 1000);
-// do I need the counter or it going to be be part of the timer and/or scoreContainer
 var question = document.getElementById("question");
 
 var counter = document.getElementById("counter");
@@ -126,7 +75,9 @@ var playerScore = 0;
 
 var ScoreContainer = document.getElementById("scoreContainer");
 
-var submitButton = document.getElementById("endGame")
+var submitButton = document.getElementById("endGame");
+
+var userChoices = document.getElementById("choices");
 
 var questions = [
     {
@@ -171,11 +122,5 @@ var questions = [
         correct: "[]"
     },
 ];
-
-
-// pretty sure this for loop will be used to at some point to cycle through the questions? I am not really sure
-// var score = 0
-
-// for (var i = 0; i < question.length; i++)
 
 
