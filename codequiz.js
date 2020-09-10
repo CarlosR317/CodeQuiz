@@ -5,69 +5,7 @@
 // must create the local storage, to save the scores
 // have to create the var for the arrays
 
-
-// pretty sure this will be used to get the start button to actually get the game going. this was provided by youtube.
-var quesIndex = 0;
-
-
-//How do I make it so that the timer starts when the start btn is clicked 
-var start = document.getElementById("start");
-
-
-var startButton = document.getElementById("start-btn");
-
-startButton.addEventListener('click', startGame);
-function startGame() {
-    t = 200
-    startButton.classList.add('hide')
-    currentQuestionIndex = 0
-    questionElement.classList.remove('hide')
-    setNextQuestion()
-}
-
-function setNextQuestion() {
-    var currentques = questions[quesIndex]
-    var question = document.getElementById("question");
-    question.textContent = currentques.question;
-
-    for (var i = 0; i < choices.length; i++) {
-        var choice = document.createElement("button");
-    userChoices.append(choice)
-    choice.onclick = selectAnswer
-
-    }
-}
-function showQuestions() {
-
-}
-// timer works when this is commented out 
-// function selectAnswer(e) {
-//     var selectButton = e.target
-//     if (selectButton !== questions[quesIndex].correct) {
-//         t = - 5;
-//     }
-// }
-// if (selectButton == questions[quesIndex].correct) {
-//     question
-
-// }
-
-// still have to figure out how to make the above code work, it is supposed to take 5 seconds off the clock when an answer is wrong but when the code is in place it does not let the timer work.
-
-
-function timer001() {
-    t = t - 1;
-    if (t < 200); {
-        timer.innerHTML = t;
-    }
-    if (t < 1) {
-        window.clearInterval(update);
-    }
-}
-update = setInterval("timer001()", 1000);
-
-
-var question = document.getElementById("question");
+var questionDiv = document.getElementById("questions");
 
 var counter = document.getElementById("counter");
 
@@ -77,8 +15,7 @@ var ScoreContainer = document.getElementById("scoreContainer");
 
 var submitButton = document.getElementById("endGame");
 
-var userChoices = document.getElementById("choices");
-
+// the questions
 var questions = [
     {
         question: "What is a String?",
@@ -97,7 +34,7 @@ var questions = [
         choices: ["Part of the math world", "Can be used to save bits of info to be used later", "Essentially a list", "Holds either true or False value"],
         correct: "Can be used to save bits of info to be used later"
     }, {
-        question: "What is one line of code that can pull elements from an HTML file by ID?",
+        question: "What is one line of code that can pull elements from an HTML file by Id?",
         choices: ["function()", "if {} else {}", "document.getElementById()", "var element="],
         correct: "document.getElementById()"
     }, {
@@ -109,7 +46,7 @@ var questions = [
         choices: ["document.getElementById()", "function()", "if {} else {}", "for (var i = 0; i < #; i++)"],
         correct: "if {} else {}"
     }, {
-        question: "What can Java Script do for you HTML?",
+        question: "What can Java Script do for your HTML?",
         choices: ["Can give it coffee", "provides the HTML with actions that can respond to the user and help improve user experience", "Makes it look pretty", "creates the HTML"],
         correct: "provides the HTML with actions that can respond to the user and help improve user experience"
     }, {
@@ -122,5 +59,72 @@ var questions = [
         correct: "[]"
     },
 ];
+
+var quesIndex = 0;
+
+var start = document.getElementById("start");
+
+var startButton = document.getElementById("start-btn");
+
+var t = 200
+
+//start button, will initiate the timer and pull up the questions 
+startButton.addEventListener('click', startGame);
+function startGame() {
+    timer001()
+    startButton.classList.add('hide')
+    start.classList.add('hide')
+    currentQuestionIndex = 0
+    showQuestions()
+}
+
+function showQuestions() {
+// regardless of correct or wrong next question will pull up. if wrong 5 seconds will be removed
+    var questionText = document.createElement("p")
+    questionText.textContent = questions[quesIndex].question
+    questionDiv.appendChild(questionText)
+    for (letter in questions[quesIndex].choices) {
+        var choice = document.createElement("button")
+        choice.textContent = questions[quesIndex].choices[letter]
+        choice.id = letter
+        choice.setAttribute("class", "buttonChoice")
+        questionDiv.appendChild(choice)
+
+    }
+    var choiceBtn = document.querySelectorAll(".buttonChoice")
+
+    for (var i = 0; i < choiceBtn.length; i++) {
+        choiceBtn[i].addEventListener('click', function () {
+            var choiceId = this.id
+            if (questions[quesIndex].choices[choiceId] == questions[quesIndex].correct) { }
+            else { t -= 5 }
+            if (choiceBtn.length == 0 || t == 0) { endQuiz() }
+            nextQuestion()
+        })
+    }
+}
+
+function nextQuestion() {
+    quesIndex++
+    questionDiv.innerHTML = ""
+    showQuestions()
+}
+function endQuiz() {
+    submitButton.addEventListener('click', 'endGame');
+}
+
+
+function timer001() {
+    var update = setInterval(function () {
+
+        t = t - 1;
+        if (t < 200); {
+            timer.innerHTML = t;
+        }
+        if (t < 1) {
+            window.clearInterval(update);
+        }
+    }, 1000)
+}
 
 
